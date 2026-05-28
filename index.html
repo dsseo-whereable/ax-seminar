@@ -269,6 +269,24 @@
         box-shadow: 0 16px 44px var(--shadow);
       }
 
+      iframe:fullscreen {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      iframe:-webkit-full-screen {
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
       @media (max-width: 820px) {
         .shell {
           grid-template-columns: 56px minmax(0, 1fr);
@@ -358,13 +376,16 @@
             <button id="reload-frame" class="icon-button" type="button" title="Reload presentation" aria-label="Reload presentation">
               &#8635;
             </button>
+            <button id="fullscreen-frame" class="icon-button" type="button" title="Maximize presentation" aria-label="Maximize presentation">
+              &#9974;
+            </button>
             <a id="open-current" class="icon-button" href="archive/20260515.html" target="_blank" rel="noreferrer" title="Open presentation" aria-label="Open presentation">
               &#8599;
             </a>
           </div>
         </header>
         <div class="frame-wrap">
-          <iframe id="viewer" title="Selected seminar presentation" src="archive/20260515.html"></iframe>
+          <iframe id="viewer" title="Selected seminar presentation" src="archive/20260515.html" allowfullscreen></iframe>
         </div>
       </main>
     </div>
@@ -398,6 +419,7 @@
       const metaEl = document.querySelector("#viewer-meta");
       const openEl = document.querySelector("#open-current");
       const reloadEl = document.querySelector("#reload-frame");
+      const fullscreenEl = document.querySelector("#fullscreen-frame");
 
       function formatDate(value) {
         const date = new Date(`${value}T00:00:00`);
@@ -494,6 +516,45 @@
         toggleEl.innerHTML = isOpen ? "&#215;" : "&#9776;";
       }
 
+      function fullscreenElement() {
+        return document.fullscreenElement || document.webkitFullscreenElement;
+      }
+
+      function requestViewerFullscreen() {
+        if (viewerEl.requestFullscreen) return viewerEl.requestFullscreen();
+        if (viewerEl.webkitRequestFullscreen) return viewerEl.webkitRequestFullscreen();
+        return Promise.reject(new Error("Fullscreen API unavailable"));
+      }
+
+      function exitViewerFullscreen() {
+        if (document.exitFullscreen) return document.exitFullscreen();
+        if (document.webkitExitFullscreen) return document.webkitExitFullscreen();
+        return Promise.resolve();
+      }
+
+      function updateFullscreenButton() {
+        const isFullscreen = fullscreenElement() === viewerEl;
+        fullscreenEl.setAttribute("aria-label", isFullscreen ? "Exit presentation fullscreen" : "Maximize presentation");
+        fullscreenEl.setAttribute("title", isFullscreen ? "Exit presentation fullscreen" : "Maximize presentation");
+        fullscreenEl.innerHTML = isFullscreen ? "&#10005;" : "&#9974;";
+      }
+
+      async function togglePresentationFullscreen() {
+        try {
+          if (fullscreenElement()) {
+            await exitViewerFullscreen();
+          } else {
+            await requestViewerFullscreen();
+          }
+        } catch (error) {
+          if (state.selected) {
+            window.open(state.selected.path, "_blank", "noopener,noreferrer");
+          }
+        } finally {
+          updateFullscreenButton();
+        }
+      }
+
       async function loadArchive() {
         let items = fallbackArchive;
 
@@ -526,6 +587,11 @@
       reloadEl.addEventListener("click", () => {
         if (state.selected) viewerEl.src = state.selected.path;
       });
+
+      fullscreenEl.addEventListener("click", togglePresentationFullscreen);
+
+      document.addEventListener("fullscreenchange", updateFullscreenButton);
+      document.addEventListener("webkitfullscreenchange", updateFullscreenButton);
 
       window.addEventListener("hashchange", () => {
         const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
