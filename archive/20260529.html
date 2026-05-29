@@ -1098,7 +1098,7 @@
     <nav class="deck-nav">
       <strong>AX Seminar / Agent OS</strong>
       <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
-      <strong id="slide-count">1 / 16</strong>
+      <strong id="slide-count">1 / 15</strong>
     </nav>
 
     <main>
@@ -1326,11 +1326,11 @@
       <section class="slide" id="orchestration">
         <div class="screenshot-feature">
           <div class="feature-copy">
-            <div class="eyebrow">Orchestration</div>
-            <h2>t2am ROS workspace는 모듈마다 subagent를 둔다</h2>
+            <div class="eyebrow">Delegation</div>
+            <h2>믿을 만한 작업 기록이 쌓이면 위임이 가능해진다</h2>
             <p class="lead">
-              t2am 프로젝트의 ros-ws는 모듈이 많고 각 모듈의 맥락이 다릅니다.
-              18개의 subagent를 두고 각 worker가 담당 모듈의 변경, 검증, 주의점을 관리하게 합니다.
+              작업 지시, 중간 판단, 실패한 시도, 검증 결과가 세션에 남으면
+              사용자는 모든 세부 맥락을 직접 들고 있지 않아도 orchestrator를 통해 subagent에게 작업을 위임할 수 있습니다.
             </p>
           </div>
           <figure class="capture-slot screenshot-slot wide-capture" data-slot="codex-subagent-orchestration">
@@ -1345,7 +1345,7 @@
                 alt="Codex Desktop에서 t2am ROS workspace의 여러 subagent worker 세션을 관리하는 화면"
               >
             </div>
-            <figcaption class="slot-caption">각 모듈 담당 subagent는 자기 모듈의 상태를 들고 있고, 사용자는 목록에서 필요한 worker를 바로 확인할 수 있습니다.</figcaption>
+            <figcaption class="slot-caption">기록이 남는 세션 목록은 다음 담당 subagent를 고르고 직접 대화할 수 있는 관리 표면이 됩니다.</figcaption>
           </figure>
         </div>
       </section>
@@ -1375,18 +1375,6 @@
             <figcaption class="slot-caption">orchestrator는 사용자와 모듈별 subagent 사이의 관리 표면이 되고, 사용자는 여기서 전체 진행 상태를 통제합니다.</figcaption>
           </figure>
         </div>
-      </section>
-
-      <section class="slide compact" id="meaning">
-        <div class="eyebrow">Meaning</div>
-        <h2>IDE가 사라진다는 뜻이 아니다</h2>
-        <div class="quote">
-          IDE는 Agent OS 안에서 쓰이는 도구 중 하나가 된다
-        </div>
-        <p class="lead">
-          Cursor, VS Code, Claude Desktop, 터미널, 원격 서버는 모두 남습니다.
-          하지만 중심은 편집기가 아니라 <span class="accent">작업을 기억하고 검증하는 운영 환경</span>입니다.
-        </p>
       </section>
 
       <section class="slide" id="desktop-tools">
