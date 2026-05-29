@@ -175,6 +175,35 @@
         max-width: 1180px;
       }
 
+      .tool-stack {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        max-width: 1180px;
+      }
+
+      .tool-card {
+        min-height: 210px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 24px;
+        background: #ffffff;
+        box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08), 0 8px 24px rgba(60, 64, 67, 0.08);
+      }
+
+      .tool-card b {
+        display: block;
+        margin-bottom: 14px;
+        color: var(--accent);
+        font-size: 18px;
+      }
+
+      .tool-card p {
+        color: var(--muted);
+        font-size: 20px;
+        line-height: 1.55;
+      }
+
       .card {
         min-height: 156px;
         border: 1px solid var(--line);
@@ -654,6 +683,7 @@
         .two-col,
         .two-col.reversed,
         .cards,
+        .tool-stack,
         .timeline,
         .security-scene,
         .phone-server {
@@ -1379,27 +1409,26 @@
       </section>
 
       <section class="slide" id="desktop-tools">
-        <div class="two-col reversed">
-          <figure class="capture-slot" data-slot="claude-cursor-tool-roles">
-            <div class="slot-head">
-              <span>Capture slot</span>
-              <code>claude-cursor-tool-roles</code>
-            </div>
-            <div class="slot-body">
-              <div class="placeholder-image">
-                <strong>Claude Desktop / Cursor usage</strong>
-                <small>문서 정리, 아이디어 다듬기, 제한된 편집 작업 예시 캡처</small>
-              </div>
-            </div>
-            <figcaption class="slot-caption">Codex 외 도구도 역할별로 쓸모가 있다는 예시를 넣습니다.</figcaption>
-          </figure>
-          <div>
-            <div class="eyebrow">Tip</div>
-            <h2>Claude Desktop과 Cursor도 여전히 쓸모가 있다</h2>
-            <p class="lead">
-              하나의 도구로 통일하는 것이 목표가 아닙니다.
-              긴 문맥 정리, 빠른 편집, 제한된 세션 등 도구별 역할을 분리합니다.
-            </p>
+        <div>
+          <div class="eyebrow">Tip</div>
+          <h2>Codex Desktop이 기본이어도 Claude Code / Cursor가 필요할 때가 있다</h2>
+          <p class="lead">
+            Agent OS의 핵심은 특정 앱 하나로 통일하는 것이 아닙니다.
+            작업 환경과 권한, 편집 방식에 따라 가장 적절한 agent 표면을 고르는 것입니다.
+          </p>
+        </div>
+        <div class="tool-stack">
+          <div class="tool-card">
+            <b>Codex Desktop</b>
+            <p>프로젝트별 workspace, 세션 목록, 브라우저와 git 상태를 한 화면에서 관리할 때 기본 작업 표면이 됩니다.</p>
+          </div>
+          <div class="tool-card">
+            <b>Claude Code</b>
+            <p>서버 터미널에 바로 붙거나, 특정 환경에서 짧고 빠르게 agent 작업을 실행해야 할 때 유용합니다.</p>
+          </div>
+          <div class="tool-card">
+            <b>Cursor</b>
+            <p>제한된 편집, 빠른 코드 탐색, 토큰을 남기기 어려운 임시 환경에서는 여전히 실용적인 선택지입니다.</p>
           </div>
         </div>
       </section>
@@ -1408,34 +1437,25 @@
         <div class="two-col">
           <div>
             <div class="eyebrow">Security</div>
-            <h2>공용 PC에 토큰을 남기면 Agent OS 시대에는 더 위험하다</h2>
+            <h2>토큰은 중요한 자산이고, 누군가 다 써버릴 수도 있다</h2>
             <p class="lead">
-              agent는 파일을 읽고, 서버에 접속하고, git push와 배포까지 할 수 있습니다.
-              어떤 도구에 어떤 권한을 줄지 분리해야 합니다.
+              agent 토큰에는 비용, rate limit, 작업 권한이 같이 붙어 있습니다.
+              공용 PC나 임시 장비에 로그인 상태를 남기면 누군가 내 한도와 권한을 그대로 소모할 수 있습니다.
             </p>
           </div>
-          <figure class="capture-slot" data-slot="shared-pc-token-risk">
+          <figure class="capture-slot screenshot-slot" data-slot="codex-token-status">
             <div class="slot-head">
-              <span>Capture slot</span>
-              <code>shared-pc-token-risk</code>
+              <span>Token status</span>
+              <code>codex-token-status</code>
             </div>
-            <div class="slot-body">
-              <div class="security-scene" aria-label="token risk placeholder">
-                <div class="security-card danger-card">
-                  <b class="danger">공용 PC에 남은 토큰</b>
-                  <div class="token-line"></div>
-                  <div class="token-line"></div>
-                  <div class="token-line"></div>
-                </div>
-                <div class="security-card good-card">
-                  <b class="accent">권한 있는 작업은 개인 환경에서</b>
-                  <div class="token-line"></div>
-                  <div class="token-line"></div>
-                  <div class="token-line"></div>
-                </div>
-              </div>
+            <div class="slot-body image-body">
+              <img
+                class="slot-image"
+                src="assets/20260529/codex-token-status-risk.svg"
+                alt="Codex status 화면에서 계정, 모델, 권한, limits가 표시되는 터미널 예시"
+              >
             </div>
-            <figcaption class="slot-caption">토큰이 남은 공용 PC 예시와, 토큰을 남기지 않는 Cursor/원격 환경 사용 예시를 넣습니다.</figcaption>
+            <figcaption class="slot-caption">토큰은 단순한 로그인 정보가 아니라 비용과 작업 권한이 걸린 운영 자산입니다.</figcaption>
           </figure>
         </div>
       </section>
