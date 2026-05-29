@@ -1,12 +1,20 @@
 {
   "presentations": [
     {
+      "id": "20260529",
+      "title": "IDE는 지고 Agent OS가 떠오른다",
+      "date": "2026-05-29",
+      "path": "archive/20260529.html",
+      "summary": "Codex Desktop과 Agent OS 중심 작업 방식 발표.",
+      "current": true
+    },
+    {
       "id": "20260515",
       "title": "AX Seminar Presentation",
       "date": "2026-05-15",
       "path": "archive/20260515.html",
       "summary": "Most recent published seminar deck.",
-      "current": true
+      "current": false
     }
   ]
 }

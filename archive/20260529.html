@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IDE는 지고 Agent OS가 떠오른다</title>
+    <style>
+      :root {
+        --bg: #111214;
+        --bg-2: #17191d;
+        --panel: #202329;
+        --panel-2: #2a2e36;
+        --text: #f2f0e8;
+        --muted: #afb2b9;
+        --line: rgba(255, 255, 255, 0.14);
+        --accent: #62c9b7;
+        --accent-2: #f0b95f;
+        --danger: #ef767a;
+        --blue: #7ba7ff;
+        --shadow: rgba(0, 0, 0, 0.36);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+        background:
+          linear-gradient(135deg, rgba(98, 201, 183, 0.11), transparent 34%),
+          linear-gradient(315deg, rgba(240, 185, 95, 0.1), transparent 38%),
+          var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      .deck-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 0 28px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(17, 18, 20, 0.86);
+        backdrop-filter: blur(14px);
+      }
+
+      .deck-nav strong {
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      #slide-count {
+        white-space: nowrap;
+      }
+
+      .progress {
+        width: min(320px, 34vw);
+        height: 6px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.12);
+        overflow: hidden;
+      }
+
+      .progress span {
+        display: block;
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      }
+
+      .slide {
+        min-height: 100vh;
+        display: grid;
+        align-content: center;
+        gap: 30px;
+        padding: 88px 7vw 64px;
+        border-bottom: 1px solid var(--line);
+        position: relative;
+      }
+
+      .slide.compact {
+        gap: 24px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.88rem;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+        word-break: keep-all;
+      }
+
+      h1 {
+        max-width: 1120px;
+        font-size: clamp(3.6rem, 9vw, 8.2rem);
+        line-height: 0.92;
+        letter-spacing: -0.055em;
+      }
+
+      h2 {
+        max-width: 1160px;
+        font-size: clamp(2.6rem, 5.8vw, 5.7rem);
+        line-height: 1.04;
+        letter-spacing: -0.045em;
+      }
+
+      h3 {
+        font-size: clamp(1.5rem, 2.7vw, 2.6rem);
+        line-height: 1.18;
+        letter-spacing: -0.03em;
+      }
+
+      .lead {
+        max-width: 980px;
+        color: #e2e0d8;
+        font-size: clamp(1.25rem, 2vw, 2rem);
+        line-height: 1.56;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .mark {
+        color: var(--accent-2);
+      }
+
+      .danger {
+        color: var(--danger);
+      }
+
+      .hero-grid,
+      .two-col {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+        gap: 34px;
+        align-items: center;
+      }
+
+      .two-col.reversed {
+        grid-template-columns: minmax(360px, 0.95fr) minmax(0, 1.05fr);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        max-width: 1180px;
+      }
+
+      .card {
+        min-height: 156px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 22px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035));
+        box-shadow: 0 20px 58px var(--shadow);
+      }
+
+      .card b {
+        display: block;
+        color: var(--accent);
+        font-size: 0.84rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+
+      .card p {
+        color: #dfded7;
+        font-size: clamp(1rem, 1.4vw, 1.24rem);
+        line-height: 1.55;
+      }
+
+      .quote {
+        max-width: 980px;
+        border-left: 5px solid var(--accent);
+        padding: 24px 30px;
+        border-radius: 0 8px 8px 0;
+        background: rgba(98, 201, 183, 0.1);
+        font-size: clamp(1.7rem, 3vw, 3rem);
+        line-height: 1.35;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+      }
+
+      .capture-slot {
+        min-height: 360px;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        border: 1px dashed rgba(242, 240, 232, 0.38);
+        border-radius: 8px;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+          var(--panel);
+        box-shadow: 0 24px 70px var(--shadow);
+        overflow: hidden;
+      }
+
+      .slot-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        min-height: 48px;
+        padding: 0 16px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      .slot-head span {
+        color: var(--accent);
+        font-weight: 800;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .slot-head code {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .slot-body {
+        min-height: 0;
+        display: grid;
+        place-items: center;
+        padding: 26px;
+      }
+
+      .slot-caption {
+        padding: 13px 16px 15px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.45;
+      }
+
+      .placeholder-image {
+        width: min(100%, 720px);
+        aspect-ratio: 16 / 9;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.08) 25%, transparent 25%) 0 0 / 34px 34px,
+          linear-gradient(315deg, rgba(255, 255, 255, 0.06) 25%, transparent 25%) 0 0 / 34px 34px,
+          #14171d;
+        color: var(--text);
+        text-align: center;
+        padding: 24px;
+      }
+
+      .placeholder-image strong {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--accent-2);
+        font-size: clamp(1.2rem, 2vw, 2.1rem);
+      }
+
+      .placeholder-image small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+
+      .window-stack {
+        width: min(100%, 680px);
+        height: 360px;
+        position: relative;
+      }
+
+      .fake-window {
+        position: absolute;
+        width: 74%;
+        height: 64%;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background: #161a22;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+      }
+
+      .fake-window:nth-child(1) {
+        top: 12px;
+        left: 14px;
+        transform: rotate(-4deg);
+      }
+
+      .fake-window:nth-child(2) {
+        top: 72px;
+        right: 8px;
+        transform: rotate(3deg);
+      }
+
+      .fake-window:nth-child(3) {
+        left: 70px;
+        bottom: 8px;
+        transform: rotate(-1deg);
+      }
+
+      .fake-title {
+        height: 32px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0 11px;
+        border-bottom: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 99px;
+        background: var(--danger);
+      }
+
+      .dot:nth-child(2) {
+        background: var(--accent-2);
+      }
+
+      .dot:nth-child(3) {
+        background: var(--accent);
+      }
+
+      .fake-lines {
+        padding: 16px;
+      }
+
+      .fake-lines i {
+        display: block;
+        height: 9px;
+        margin-bottom: 10px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      .fake-lines i:nth-child(2n) {
+        width: 66%;
+      }
+
+      .fake-lines i:nth-child(3n) {
+        width: 84%;
+        background: rgba(98, 201, 183, 0.3);
+      }
+
+      .workspace-grid {
+        width: min(100%, 720px);
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .workspace-tile {
+        min-height: 108px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        padding: 14px;
+        background: #151820;
+      }
+
+      .workspace-tile strong {
+        display: block;
+        margin-bottom: 18px;
+      }
+
+      .workspace-tile span {
+        display: block;
+        width: 74%;
+        height: 8px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      .workspace-tile em {
+        display: block;
+        width: 48%;
+        height: 8px;
+        margin-top: 9px;
+        border-radius: 99px;
+        background: rgba(240, 185, 95, 0.45);
+      }
+
+      .phone-server {
+        width: min(100%, 720px);
+        display: grid;
+        grid-template-columns: 160px minmax(0, 1fr);
+        gap: 26px;
+        align-items: center;
+      }
+
+      .phone {
+        height: 320px;
+        border: 8px solid #0b0d11;
+        border-radius: 30px;
+        background: #151922;
+        padding: 28px 12px;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 20px 42px rgba(0, 0, 0, 0.36);
+      }
+
+      .phone span {
+        display: block;
+        height: 12px;
+        margin-bottom: 12px;
+        border-radius: 99px;
+        background: rgba(98, 201, 183, 0.38);
+      }
+
+      .servers {
+        display: grid;
+        gap: 12px;
+      }
+
+      .server {
+        height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        padding: 0 16px;
+        background: #171b23;
+      }
+
+      .server b {
+        color: #e9e6dc;
+      }
+
+      .server span {
+        color: var(--accent);
+        font-size: 0.82rem;
+      }
+
+      .orchestra {
+        width: min(100%, 720px);
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        align-items: center;
+      }
+
+      .agent-node {
+        min-height: 116px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        padding: 14px;
+        background: #151820;
+        text-align: center;
+        font-weight: 800;
+      }
+
+      .agent-node.primary {
+        min-height: 150px;
+        border-color: rgba(98, 201, 183, 0.6);
+        background: rgba(98, 201, 183, 0.12);
+        color: var(--accent);
+      }
+
+      .repo-map {
+        width: min(100%, 720px);
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .module {
+        min-height: 58px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 8px;
+        background: #151922;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .module.hot {
+        border-color: rgba(240, 185, 95, 0.65);
+        color: var(--accent-2);
+        background: rgba(240, 185, 95, 0.1);
+      }
+
+      .security-scene {
+        width: min(100%, 720px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .security-card {
+        min-height: 210px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        padding: 20px;
+        background: #151820;
+      }
+
+      .security-card.danger-card {
+        border-color: rgba(239, 118, 122, 0.5);
+      }
+
+      .security-card.good-card {
+        border-color: rgba(98, 201, 183, 0.5);
+      }
+
+      .security-card b {
+        display: block;
+        margin-bottom: 20px;
+        color: var(--text);
+      }
+
+      .token-line {
+        height: 13px;
+        margin-bottom: 12px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      .danger-card .token-line {
+        background: rgba(239, 118, 122, 0.36);
+      }
+
+      .good-card .token-line {
+        background: rgba(98, 201, 183, 0.34);
+      }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        max-width: 1100px;
+      }
+
+      .step {
+        border-top: 3px solid var(--accent);
+        padding: 18px 4px 0;
+      }
+
+      .step b {
+        display: block;
+        margin-bottom: 12px;
+        color: var(--accent-2);
+      }
+
+      .step p {
+        color: #dfded7;
+        font-size: 1.05rem;
+        line-height: 1.5;
+      }
+
+      .footer-note {
+        position: absolute;
+        bottom: 24px;
+        left: 7vw;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      @media (max-width: 900px) {
+        .deck-nav {
+          padding: 0 16px;
+        }
+
+        .progress {
+          width: 28vw;
+        }
+
+        .slide {
+          padding: 82px 24px 58px;
+        }
+
+        .hero-grid,
+        .two-col,
+        .two-col.reversed,
+        .cards,
+        .timeline,
+        .security-scene,
+        .phone-server {
+          grid-template-columns: 1fr;
+        }
+
+        .capture-slot {
+          min-height: 300px;
+        }
+
+        .repo-map {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .orchestra {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="deck-nav">
+      <strong>AX Seminar / Agent OS</strong>
+      <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+      <strong id="slide-count">1 / 14</strong>
+    </nav>
+
+    <main>
+      <section class="slide" id="opening">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Opening</div>
+            <h1>IDE는 지고<br>Agent OS가 떠오른다</h1>
+            <p class="lead">
+              편집기는 남지만, 작업의 중심은 파일 편집에서
+              <span class="accent">작업 세션과 agent orchestration</span>으로 이동합니다.
+            </p>
+          </div>
+          <figure class="capture-slot" data-slot="opening-agent-os-cover">
+            <div class="slot-head">
+              <span>Capture slot</span>
+              <code>opening-agent-os-cover</code>
+            </div>
+            <div class="slot-body">
+              <div class="placeholder-image">
+                <strong>Agent OS cover image</strong>
+                <small>Codex Desktop 또는 전체 작업 환경을 보여주는 첫 화면 캡처</small>
+              </div>
+            </div>
+            <figcaption class="slot-caption">첫 장에는 실제 작업 환경 캡처를 넣어 발표 주제를 바로 보여줍니다.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="slide compact" id="claim">
+        <div class="eyebrow">Thesis</div>
+        <h2>문제는 코드를 어디서 편집하느냐가 아니다</h2>
+        <div class="cards">
+          <div class="card">
+            <b>기억</b>
+            <p>여러 작업의 상태와 결정이 어디에 남는가?</p>
+          </div>
+          <div class="card">
+            <b>인수인계</b>
+            <p>다음 agent가 프로젝트 맥락을 이어받을 수 있는가?</p>
+          </div>
+          <div class="card">
+            <b>운영</b>
+            <p>로컬, 원격 서버, 배포, 테스트를 한 흐름으로 관리하는가?</p>
+          </div>
+        </div>
+        <div class="quote">IDE 중심에서 Agent OS 중심으로</div>
+      </section>
+
+      <section class="slide" id="ide-fatigue">
+        <div class="two-col">
+          <div>
+            <div class="eyebrow">Pain Point</div>
+            <h2>창은 많아졌는데 상태는 내 머리 안에 있다</h2>
+            <p class="lead">
+              여러 프로젝트를 동시에 처리하면 VS Code 창, 터미널, 원격 세션이 흩어지고
+              마지막 작업 상태를 사람이 다시 찾아야 합니다.
+            </p>
+          </div>
+          <figure class="capture-slot" data-slot="vscode-window-chaos">
+            <div class="slot-head">
+              <span>Capture slot</span>
+              <code>vscode-window-chaos</code>
+            </div>
+            <div class="slot-body">
+              <div class="window-stack" aria-label="여러 IDE 창이 겹친 placeholder">
+                <div class="fake-window">
+                  <div class="fake-title"><span class="dot"></span><span class="dot"></span><span class="dot"></span> frontend</div>
+                  <div class="fake-lines"><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+                <div class="fake-window">
+                  <div class="fake-title"><span class="dot"></span><span class="dot"></span><span class="dot"></span> ros-ws</div>
+                  <div class="fake-lines"><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+                <div class="fake-window">
+                  <div class="fake-title"><span class="dot"></span><span class="dot"></span><span class="dot"></span> paper figures</div>
+                  <div class="fake-lines"><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="slot-caption">여러 VS Code 창과 터미널이 떠 있는 실제 캡처로 교체합니다.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="slide" id="workspace">
+        <div class="two-col reversed">
+          <figure class="capture-slot" data-slot="codex-workspace-overview">
+            <div class="slot-head">
+              <span>Capture slot</span>
+              <code>codex-workspace-overview</code>
+            </div>
+            <div class="slot-body">
+              <div class="workspace-grid" aria-label="Codex workspace placeholder">
+                <div class="workspace-tile"><strong>ax-seminar</strong><span></span><em></em></div>
+                <div class="workspace-tile"><strong>ros-ws</strong><span></span><em></em></div>
+                <div class="workspace-tile"><strong>paper</strong><span></span><em></em></div>
+                <div class="workspace-tile"><strong>infra</strong><span></span><em></em></div>
+              </div>
+            </div>
+            <figcaption class="slot-caption">Codex Desktop에서 프로젝트별 workspace와 thread가 정리된 화면 캡처를 넣습니다.</figcaption>
+          </figure>
+          <div>
+            <div class="eyebrow">Codex Desktop</div>
+            <h2>프로젝트는 폴더가 아니라 작업 단위가 된다</h2>
+            <p class="lead">
+              대화, 명령어, 변경사항, 테스트, 실패한 시도가 프로젝트 세션 안에 남습니다.
+              파일 편집과 터미널은 그 세션 안의 도구가 됩니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide compact" id="shift">
+        <div class="eyebrow">Shift</div>
+        <h2>중심이 바뀐다</h2>
+        <div class="timeline">
+          <div class="step">
+            <b>파일 중심</b>
+            <p>무슨 파일을 열었는지 기억한다.</p>
+          </div>
+          <div class="step">
+            <b>창 중심</b>
+            <p>어떤 IDE 창이 어떤 작업인지 찾는다.</p>
+          </div>
+          <div class="step">
+            <b>세션 중심</b>
+            <p>작업의 상태와 기록을 thread에서 이어간다.</p>
+          </div>
+          <div class="step">
+            <b>운영 중심</b>
+            <p>agent가 작업을 나누고 검증하고 인수인계한다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="remote">
+        <div class="two-col">
+          <div>
+            <div class="eyebrow">Remote Control</div>
+            <h2>하나의 기기에서 모든 원격 서버를 관리한다</h2>
+            <p class="lead">
+              GPU 서버, 회사 서버, VM, container, CI 환경까지 작업 표면으로 들어옵니다.
+              심지어 폰에서도 상태 확인과 다음 지시가 가능합니다.
+            </p>
+            <p class="lead muted">님폰없? 이제는 폰으로 서버 못 봄?</p>
+          </div>
+          <figure class="capture-slot" data-slot="remote-control-phone">
+            <div class="slot-head">
+              <span>Capture slot</span>
+              <code>remote-control-phone</code>
+            </div>
+            <div class="slot-body">
+              <div class="phone-server" aria-label="phone remote control placeholder">
+                <div class="phone"><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="servers">
+                  <div class="server"><b>gpu-a100</b><span>running</span></div>
+                  <div class="server"><b>lab-ros</b><span>attached</span></div>
+                  <div class="server"><b>deploy-vm</b><span>idle</span></div>
+                  <div class="server"><b>ci-runner</b><span>watching</span></div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="slot-caption">폰 또는 단일 장치에서 원격 서버 작업을 보는 캡처를 넣습니다.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="slide" id="orchestration">
+        <div class="two-col reversed">
+          <figure class="capture-slot" data-slot="codex-subagent-orchestration">
+            <div class="slot-head">
+              <span>Capture slot</span>
+              <code>codex-subagent-orchestration</code>
+            </div>
+            <div class="slot-body">
+              <div class="orchestra" aria-label="subagent orchestration placeholder">
+                <div class="agent-node">explore<br>분석</div>
+                <div class="agent-node primary">orchestrator<br>통합 판단</div>
+                <div class="agent-node">executor<br>수정</div>
+                <div class="agent-node">test<br>검증</div>
+                <div class="agent-node">review<br>리스크</div>
+                <div class="agent-node">writer<br>문서</div>
+              </div>
+            </div>
+            <figcaption class="slot-caption">Codex subagent/thread가 병렬로 돌아가는 화면 캡처를 넣습니다.</figcaption>
+          </figure>
+          <div>
+            <div class="eyebrow">Orchestration</div>
+            <h2>믿을 만한 작업 기록이 쌓이면 인수인계가 가능해진다</h2>
+            <p class="lead">
+              인간 관리자가 모든 맥락을 들고 있는 구조에서,
+              agent 관리자 또는 orchestrator가 여러 subagent에게 작업을 나눠주는 구조로 이동합니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide compact" id="handoff">
+        <div class="eyebrow">Handoff</div>
+        <h2>agent에게 넘길 수 있는 것은 코드가 아니라 맥락이다</h2>
+        <div class="cards">
+          <div class="card">
+            <b>의도</b>
+            <p>왜 이 변경을 하는지, 목표가 무엇인지 남긴다.</p>
+          </div>
+          <div class="card">
+            <b>거절한 선택지</b>
+            <p>시도했지만 버린 접근을 기록해 반복 탐색을 막는다.</p>
+          </div>
+          <div class="card">
+            <b>검증 기준</b>
+            <p>무엇이 통과되어야 완료인지 명확히 남긴다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="ros-ws">
+        <div class="two-col">
+          <div>
+            <div class="eyebrow">Complex Project</div>
+            <h2>submodule 18개짜리 ROS workspace는 IDE만으로 운영하기 어렵다</h2>
+            <p class="lead">
+              빌드 로그, package 관계, message 정의, launch 파일, simulation과 real robot 설정까지
+              프로젝트 이해 과정이 누적되어야 다음 작업자가 이어받을 수 있습니다.
+            </p>
+          </div>
+          <figure class="capture-slot" data-slot="t2am-ros-ws-submodules">
+            <div class="slot-head">
+              <span>Capture slot</span>
+              <code>t2am-ros-ws-submodules</code>
+            </div>
+            <div class="slot-body">
+              <div class="repo-map" aria-label="18 submodules placeholder">
+                <div class="module hot">core</div><div class="module">nav</div><div class="module">msg</div>
+                <div class="module">launch</div><div class="module hot">sim</div><div class="module">driver</div>
+                <div class="module">vision</div><div class="module">mapping</div><div class="module">control</div>
+                <div class="module hot">robot</div><div class="module">bridge</div><div class="module">tools</div>
+                <div class="module">calib</div><div class="module">planner</div><div class="module">ui</div>
+                <div class="module">test</div><div class="module">deploy</div><div class="module">docs</div>
+              </div>
+            </div>
+            <figcaption class="slot-caption">t2am ROS workspace의 submodule 구조, 빌드 로그, Codex 분석 화면 중 하나를 넣습니다.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="slide compact" id="meaning">
+        <div class="eyebrow">Meaning</div>
+        <h2>IDE가 사라진다는 뜻이 아니다</h2>
+        <div class="quote">
+          IDE는 Agent OS 안에서 쓰이는 도구 중 하나가 된다
+        </div>
+        <p class="lead">
+          Cursor, VS Code, Claude Desktop, 터미널, 원격 서버는 모두 남습니다.
+          하지만 중심은 편집기가 아니라 <span class="accent">작업을 기억하고 검증하는 운영 환경</span>입니다.
+        </p>
+      </section>
+
+      <section class="slide" id="desktop-tools">
+        <div class="two-col reversed">
+          <figure class="capture-slot" data-slot="claude-cursor-tool-roles">
+            <div class="slot-head">
+              <span>Capture slot</span>
+              <code>claude-cursor-tool-roles</code>
+            </div>
+            <div class="slot-body">
+              <div class="placeholder-image">
+                <strong>Claude Desktop / Cursor usage</strong>
+                <small>문서 정리, 아이디어 다듬기, 제한된 편집 작업 예시 캡처</small>
+              </div>
+            </div>
+            <figcaption class="slot-caption">Codex 외 도구도 역할별로 쓸모가 있다는 예시를 넣습니다.</figcaption>
+          </figure>
+          <div>
+            <div class="eyebrow">Tip</div>
+            <h2>Claude Desktop과 Cursor도 여전히 쓸모가 있다</h2>
+            <p class="lead">
+              하나의 도구로 통일하는 것이 목표가 아닙니다.
+              긴 문맥 정리, 빠른 편집, 제한된 세션 등 도구별 역할을 분리합니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="security">
+        <div class="two-col">
+          <div>
+            <div class="eyebrow">Security</div>
+            <h2>공용 PC에 토큰을 남기면 Agent OS 시대에는 더 위험하다</h2>
+            <p class="lead">
+              agent는 파일을 읽고, 서버에 접속하고, git push와 배포까지 할 수 있습니다.
+              어떤 도구에 어떤 권한을 줄지 분리해야 합니다.
+            </p>
+          </div>
+          <figure class="capture-slot" data-slot="shared-pc-token-risk">
+            <div class="slot-head">
+              <span>Capture slot</span>
+              <code>shared-pc-token-risk</code>
+            </div>
+            <div class="slot-body">
+              <div class="security-scene" aria-label="token risk placeholder">
+                <div class="security-card danger-card">
+                  <b class="danger">공용 PC에 남은 토큰</b>
+                  <div class="token-line"></div>
+                  <div class="token-line"></div>
+                  <div class="token-line"></div>
+                </div>
+                <div class="security-card good-card">
+                  <b class="accent">권한 있는 작업은 개인 환경에서</b>
+                  <div class="token-line"></div>
+                  <div class="token-line"></div>
+                  <div class="token-line"></div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="slot-caption">토큰이 남은 공용 PC 예시와, 토큰을 남기지 않는 Cursor/원격 환경 사용 예시를 넣습니다.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="slide compact" id="summary">
+        <div class="eyebrow">Summary</div>
+        <h2>오늘의 핵심</h2>
+        <div class="cards">
+          <div class="card">
+            <b>1</b>
+            <p>여러 프로젝트와 세션이 동시에 돌 때 IDE 중심 방식은 피로해집니다.</p>
+          </div>
+          <div class="card">
+            <b>2</b>
+            <p>Agent OS는 workspace, remote control, orchestration을 하나의 작업 표면으로 묶습니다.</p>
+          </div>
+          <div class="card">
+            <b>3</b>
+            <p>믿을 만한 기록이 쌓인 프로젝트는 agent에게 인수인계할 수 있습니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="closing">
+        <div class="eyebrow">Closing</div>
+        <h2>질문은 “어떤 IDE를 쓸까?”가 아니다</h2>
+        <div class="quote">
+          내 프로젝트를 agent가 이해하고 이어받을 수 있는 운영 환경으로 만들고 있는가?
+        </div>
+        <p class="lead muted">이 질문이 앞으로 개발, 연구, 운영 환경에서 더 중요해질 것입니다.</p>
+        <div class="footer-note">AX Seminar / Agent OS</div>
+      </section>
+    </main>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const progressBar = document.querySelector("#progress-bar");
+      const slideCount = document.querySelector("#slide-count");
+
+      function currentSlideIndex() {
+        const y = window.scrollY;
+        let index = 0;
+        slides.forEach((slide, i) => {
+          if (slide.offsetTop <= y + window.innerHeight * 0.48) index = i;
+        });
+        return index;
+      }
+
+      function updateProgress() {
+        const index = currentSlideIndex();
+        const percent = slides.length > 1 ? (index / (slides.length - 1)) * 100 : 100;
+        progressBar.style.width = `${percent}%`;
+        slideCount.textContent = `${index + 1} / ${slides.length}`;
+      }
+
+      function goToSlide(index) {
+        const clamped = Math.max(0, Math.min(slides.length - 1, index));
+        slides[clamped].scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      document.addEventListener("keydown", (event) => {
+        const index = currentSlideIndex();
+        if (["ArrowDown", "ArrowRight", " "].includes(event.key)) {
+          event.preventDefault();
+          goToSlide(index + 1);
+        }
+        if (["ArrowUp", "ArrowLeft"].includes(event.key)) {
+          event.preventDefault();
+          goToSlide(index - 1);
+        }
+        if (event.key === "Home") {
+          event.preventDefault();
+          goToSlide(0);
+        }
+        if (event.key === "End") {
+          event.preventDefault();
+          goToSlide(slides.length - 1);
+        }
+      });
+
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      window.addEventListener("resize", updateProgress);
+      updateProgress();
+    </script>
+  </body>
+</html>
