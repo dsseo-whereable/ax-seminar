@@ -255,6 +255,20 @@
         padding: 26px;
       }
 
+      .image-body {
+        padding: 10px;
+      }
+
+      .slot-image {
+        width: 100%;
+        height: min(58vh, 620px);
+        display: block;
+        object-fit: contain;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #111316;
+      }
+
       .slot-caption {
         padding: 13px 16px 15px;
         border-top: 1px solid var(--line);
@@ -615,6 +629,10 @@
 
         .capture-slot {
           min-height: 300px;
+        }
+
+        .slot-image {
+          height: 42vh;
         }
 
         .repo-map {
@@ -1047,7 +1065,7 @@
     <nav class="deck-nav">
       <strong>AX Seminar / Agent OS</strong>
       <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
-      <strong id="slide-count">1 / 14</strong>
+      <strong id="slide-count">1 / 16</strong>
     </nav>
 
     <main>
@@ -1121,29 +1139,82 @@
         </div>
       </section>
 
-      <section class="slide" id="workspace">
+      <section class="slide" id="workspace-session-browser">
         <div class="two-col reversed">
-          <figure class="capture-slot" data-slot="codex-workspace-overview">
+          <figure class="capture-slot screenshot-slot" data-slot="codex-session-browser">
             <div class="slot-head">
-              <span>Capture slot</span>
-              <code>codex-workspace-overview</code>
+              <span>Codex Desktop</span>
+              <code>session-browser-terminal</code>
             </div>
-            <div class="slot-body">
-              <div class="workspace-grid" aria-label="Codex workspace placeholder">
-                <div class="workspace-tile"><strong>ax-seminar</strong><span></span><em></em></div>
-                <div class="workspace-tile"><strong>ros-ws</strong><span></span><em></em></div>
-                <div class="workspace-tile"><strong>paper</strong><span></span><em></em></div>
-                <div class="workspace-tile"><strong>infra</strong><span></span><em></em></div>
-              </div>
+            <div class="slot-body image-body">
+              <img
+                class="slot-image"
+                src="assets/20260529/codex-integrated-browser-session.png"
+                alt="Codex Desktop에서 agent 세션, 브라우저, 터미널을 한 창에서 보는 화면"
+              >
             </div>
-            <figcaption class="slot-caption">Codex Desktop에서 프로젝트별 workspace와 thread가 정리된 화면 캡처를 넣습니다.</figcaption>
+            <figcaption class="slot-caption">agent 세션, 실행 브라우저, 터미널이 하나의 작업 화면에 붙어 있습니다.</figcaption>
           </figure>
           <div>
             <div class="eyebrow">Codex Desktop</div>
-            <h2>프로젝트는 폴더가 아니라 작업 단위가 된다</h2>
+            <h2>하나의 창 안에서 세션과 실행 화면을 같이 본다</h2>
             <p class="lead">
-              대화, 명령어, 변경사항, 테스트, 실패한 시도가 프로젝트 세션 안에 남습니다.
-              파일 편집과 터미널은 그 세션 안의 도구가 됩니다.
+              agent와의 대화, 실행 중인 브라우저, 터미널 로그가 같은 맥락 안에 남습니다.
+              이제 작업 상태를 찾기 위해 여러 IDE 창을 오갈 필요가 줄어듭니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="workspace-research-browser">
+        <div class="two-col reversed">
+          <figure class="capture-slot screenshot-slot" data-slot="codex-research-browser">
+            <div class="slot-head">
+              <span>Codex Desktop</span>
+              <code>session-research-browser</code>
+            </div>
+            <div class="slot-body image-body">
+              <img
+                class="slot-image"
+                src="assets/20260529/codex-integrated-research-browser.png"
+                alt="Codex Desktop에서 agent 세션과 웹 기반 실험 대시보드를 함께 관리하는 화면"
+              >
+            </div>
+            <figcaption class="slot-caption">작업 세션 옆에서 WandB 같은 브라우저 기반 실험 화면을 바로 확인합니다.</figcaption>
+          </figure>
+          <div>
+            <div class="eyebrow">Workspace Surface</div>
+            <h2>브라우저도 작업 맥락의 일부가 된다</h2>
+            <p class="lead">
+              실험 대시보드, 리서치 페이지, 실행 뷰어는 별도 참고 자료가 아닙니다.
+              agent가 보고 있는 세션 옆에서 같이 열리고, 다음 지시의 근거가 됩니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" id="workspace-git-files">
+        <div class="two-col reversed">
+          <figure class="capture-slot screenshot-slot" data-slot="codex-git-files-pages">
+            <div class="slot-head">
+              <span>Codex Desktop</span>
+              <code>git-files-pages</code>
+            </div>
+            <div class="slot-body image-body">
+              <img
+                class="slot-image"
+                src="assets/20260529/codex-integrated-git-pages.png"
+                alt="Codex Desktop에서 Git 작업 세션, GitHub Pages 미리보기, 터미널을 함께 보는 화면"
+              >
+            </div>
+            <figcaption class="slot-caption">Git 변경, 파일 작업, 배포된 브라우저 화면, 터미널 상태가 한 흐름으로 이어집니다.</figcaption>
+          </figure>
+          <div>
+            <div class="eyebrow">Integrated Ops</div>
+            <h2>Git, 파일, 배포 확인까지 한 흐름으로 관리한다</h2>
+            <p class="lead">
+              commit, push, 브라우저 확인, 파일 변경 이력이 같은 창 안에서 이어집니다.
+              작업의 중심은 파일 하나가 아니라 세션 전체의 상태와 검증 기록입니다.
             </p>
           </div>
         </div>
