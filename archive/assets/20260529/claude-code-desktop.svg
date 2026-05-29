@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 220" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code for Desktop</title>
+  <desc id="desc">Claude Code for Desktop logo card</desc>
+  <rect width="520" height="220" rx="30" fill="#ffffff"/>
+  <rect x="34" y="34" width="150" height="150" rx="28" fill="#d87654"/>
+  <g stroke="#fff7ef" stroke-width="12" stroke-linecap="round">
+    <path d="M109 62v94"/>
+    <path d="M62 109h94"/>
+    <path d="M75 75l68 68"/>
+    <path d="M143 75l-68 68"/>
+    <path d="M91 65l36 88"/>
+    <path d="M153 91l-88 36"/>
+    <path d="M127 65l-36 88"/>
+    <path d="M153 127l-88-36"/>
+  </g>
+  <text x="220" y="83" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800">Claude</text>
+  <text x="220" y="129" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="800">Code for</text>
+  <text x="220" y="174" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="800">Desktop</text>
+</svg>

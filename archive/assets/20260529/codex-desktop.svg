@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" role="img" aria-labelledby="title desc">
+  <title id="title">Codex Desktop</title>
+  <desc id="desc">Codex Desktop logo card</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cfe3ff"/>
+      <stop offset="0.45" stop-color="#4a7dff"/>
+      <stop offset="1" stop-color="#221bff"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="0.08" cy="0.04" r="0.88">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.88"/>
+      <stop offset="0.42" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="icon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.35" stop-color="#e8efff"/>
+      <stop offset="0.65" stop-color="#7bb0ff"/>
+      <stop offset="1" stop-color="#5c3dff"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="340" rx="30" fill="url(#bg)"/>
+  <rect width="560" height="340" rx="30" fill="url(#shine)"/>
+  <g transform="translate(216 60)">
+    <rect width="128" height="128" rx="30" fill="#ffffff" opacity="0.94"/>
+    <path d="M41 81 59 63 41 45" fill="none" stroke="#5184ff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M73 82h25" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+    <path d="M73 82h25" fill="none" stroke="#4057ff" stroke-width="8" stroke-linecap="round"/>
+    <path d="M74 39c16-22 58-3 47 31 22 15 4 45-22 39H53C20 110 17 62 45 56c3-11 12-17 29-17z" fill="url(#icon)" opacity="0.9"/>
+  </g>
+  <text x="280" y="252" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="800">Codex</text>
+</svg>

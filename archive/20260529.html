@@ -788,6 +788,45 @@
         background: #ffffff;
       }
 
+      .cover-paper-stack {
+        min-height: 520px;
+        position: relative;
+        margin: 0;
+      }
+
+      .cover-paper {
+        position: absolute;
+        display: block;
+        width: min(76%, 560px);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 8px 22px rgba(60, 64, 67, 0.18), 0 30px 70px rgba(60, 64, 67, 0.16);
+        object-fit: cover;
+      }
+
+      .cover-paper.claude {
+        top: 42px;
+        left: 0;
+        z-index: 1;
+        transform: rotate(-10deg);
+      }
+
+      .cover-paper.cursor {
+        right: 0;
+        bottom: 36px;
+        z-index: 2;
+        transform: rotate(8deg);
+      }
+
+      .cover-paper.codex {
+        top: 112px;
+        left: 50%;
+        z-index: 3;
+        width: min(82%, 590px);
+        transform: translateX(-50%) rotate(-2deg);
+      }
+
       .slot-head {
         border-bottom: 1px solid var(--line);
         background: #f8fafd;
@@ -980,6 +1019,27 @@
         .step p {
           font-size: 18px;
         }
+
+        .cover-paper-stack {
+          min-height: 390px;
+        }
+
+        .cover-paper {
+          width: 82%;
+        }
+
+        .cover-paper.claude {
+          top: 24px;
+        }
+
+        .cover-paper.cursor {
+          bottom: 24px;
+        }
+
+        .cover-paper.codex {
+          top: 104px;
+          width: 88%;
+        }
       }
     </style>
   </head>
@@ -996,23 +1056,11 @@
           <div>
             <div class="eyebrow">Opening</div>
             <h1>IDE는 지고<br>Agent OS가 떠오른다</h1>
-            <p class="lead">
-              편집기는 남지만, 작업의 중심은 파일 편집에서
-              <span class="accent">작업 세션과 agent orchestration</span>으로 이동합니다.
-            </p>
           </div>
-          <figure class="capture-slot" data-slot="opening-agent-os-cover">
-            <div class="slot-head">
-              <span>Capture slot</span>
-              <code>opening-agent-os-cover</code>
-            </div>
-            <div class="slot-body">
-              <div class="placeholder-image">
-                <strong>Agent OS cover image</strong>
-                <small>Codex Desktop 또는 전체 작업 환경을 보여주는 첫 화면 캡처</small>
-              </div>
-            </div>
-            <figcaption class="slot-caption">첫 장에는 실제 작업 환경 캡처를 넣어 발표 주제를 바로 보여줍니다.</figcaption>
+          <figure class="cover-paper-stack" data-slot="opening-agent-os-cover" aria-label="Agent OS tools shown as scattered papers">
+            <img class="cover-paper claude" src="assets/20260529/claude-code-desktop.svg" alt="Claude Code for Desktop">
+            <img class="cover-paper cursor" src="assets/20260529/cursor.svg" alt="Cursor">
+            <img class="cover-paper codex" src="assets/20260529/codex-desktop.svg" alt="Codex Desktop">
           </figure>
         </div>
       </section>
