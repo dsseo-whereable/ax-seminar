@@ -297,6 +297,11 @@
         height: min(52vh, 590px);
       }
 
+      .phone-capture .slot-image {
+        height: min(66vh, 720px);
+        background: #f8fafd;
+      }
+
       .slot-caption {
         padding: 13px 16px 15px;
         border-top: 1px solid var(--line);
@@ -1266,30 +1271,26 @@
         <div class="two-col">
           <div>
             <div class="eyebrow">Remote Control</div>
-            <h2>하나의 기기에서 모든 원격 서버를 관리한다</h2>
+            <h2>데스크탑뿐 아니라 폰 하나로도 서버를 컨트롤한다</h2>
             <p class="lead">
-              GPU 서버, 회사 서버, VM, container, CI 환경까지 작업 표면으로 들어옵니다.
-              심지어 폰에서도 상태 확인과 다음 지시가 가능합니다.
+              Mac, Raspberry Pi, GPU 서버, 회사 서버처럼 접속 가능한 모든 머신이
+              같은 작업 표면에 들어오면 장소와 기기에 묶이지 않고 상태 확인과 다음 지시가 가능합니다.
             </p>
-            <p class="lead muted">님폰없? 이제는 폰으로 서버 못 봄?</p>
+            <p class="lead muted">책상 앞 데스크탑이 아니어도, 폰 하나로 서버 작업을 이어갈 수 있습니다.</p>
           </div>
-          <figure class="capture-slot" data-slot="remote-control-phone">
+          <figure class="capture-slot screenshot-slot phone-capture" data-slot="remote-control-phone">
             <div class="slot-head">
-              <span>Capture slot</span>
+              <span>Codex Mobile</span>
               <code>remote-control-phone</code>
             </div>
-            <div class="slot-body">
-              <div class="phone-server" aria-label="phone remote control placeholder">
-                <div class="phone"><span></span><span></span><span></span><span></span><span></span></div>
-                <div class="servers">
-                  <div class="server"><b>gpu-a100</b><span>running</span></div>
-                  <div class="server"><b>lab-ros</b><span>attached</span></div>
-                  <div class="server"><b>deploy-vm</b><span>idle</span></div>
-                  <div class="server"><b>ci-runner</b><span>watching</span></div>
-                </div>
-              </div>
+            <div class="slot-body image-body">
+              <img
+                class="slot-image"
+                src="assets/20260529/codex-mobile-servers.png"
+                alt="Codex 모바일 화면에서 Mac과 Raspberry Pi 서버를 선택할 수 있는 화면"
+              >
             </div>
-            <figcaption class="slot-caption">폰 또는 단일 장치에서 원격 서버 작업을 보는 캡처를 넣습니다.</figcaption>
+            <figcaption class="slot-caption">데스크탑뿐 아니라 모바일에서도 접속 가능한 서버와 프로젝트를 고르고 작업을 이어갈 수 있습니다.</figcaption>
           </figure>
         </div>
       </section>
