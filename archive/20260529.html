@@ -269,6 +269,34 @@
         background: #111316;
       }
 
+      .screenshot-feature {
+        display: grid;
+        justify-content: center;
+        justify-items: center;
+        gap: 20px;
+      }
+
+      .feature-copy {
+        width: min(100%, 1220px);
+      }
+
+      .feature-copy h2 {
+        max-width: 1120px;
+      }
+
+      .feature-copy .lead {
+        max-width: 1160px;
+      }
+
+      .wide-capture {
+        width: min(100%, 1320px);
+        min-height: 0;
+      }
+
+      .wide-capture .slot-image {
+        height: min(52vh, 590px);
+      }
+
       .slot-caption {
         padding: 13px 16px 15px;
         border-top: 1px solid var(--line);
@@ -1131,8 +1159,16 @@
       </section>
 
       <section class="slide" id="workspace-session-browser">
-        <div class="two-col reversed">
-          <figure class="capture-slot screenshot-slot" data-slot="codex-session-browser">
+        <div class="screenshot-feature">
+          <div class="feature-copy">
+            <div class="eyebrow">Antithesis 1</div>
+            <h2>창이 아니라 세션이 작업의 기준점이 된다</h2>
+            <p class="lead">
+              사용자가 여러 창의 상태를 기억하는 대신, agent 세션이 지시와 실행 화면,
+              터미널 로그를 한 작업 흐름으로 붙잡습니다.
+            </p>
+          </div>
+          <figure class="capture-slot screenshot-slot wide-capture" data-slot="codex-session-browser">
             <div class="slot-head">
               <span>Codex Desktop</span>
               <code>session-browser-terminal</code>
@@ -1146,20 +1182,20 @@
             </div>
             <figcaption class="slot-caption">세션이 기준점이 되면 agent 대화, 실행 브라우저, 터미널이 같은 작업 단위로 묶입니다.</figcaption>
           </figure>
-          <div>
-            <div class="eyebrow">Antithesis 1</div>
-            <h2>창이 아니라 세션이 작업의 기준점이 된다</h2>
-            <p class="lead">
-              사용자가 여러 창의 상태를 기억하는 대신, agent 세션이 지시와 실행 화면,
-              터미널 로그를 한 작업 흐름으로 붙잡습니다.
-            </p>
-          </div>
         </div>
       </section>
 
       <section class="slide" id="workspace-research-browser">
-        <div class="two-col reversed">
-          <figure class="capture-slot screenshot-slot" data-slot="codex-research-browser">
+        <div class="screenshot-feature">
+          <div class="feature-copy">
+            <div class="eyebrow">Antithesis 2</div>
+            <h2>브라우저는 흩어진 탭이 아니라 판단의 근거가 된다</h2>
+            <p class="lead">
+              실험 대시보드, 리서치 페이지, 실행 뷰어를 사람이 따로 찾아 설명하지 않아도
+              같은 세션 안에서 보고, 비교하고, 다음 지시로 연결할 수 있습니다.
+            </p>
+          </div>
+          <figure class="capture-slot screenshot-slot wide-capture" data-slot="codex-research-browser">
             <div class="slot-head">
               <span>Codex Desktop</span>
               <code>session-research-browser</code>
@@ -1173,20 +1209,20 @@
             </div>
             <figcaption class="slot-caption">브라우저 화면은 따로 열린 참고 자료가 아니라 세션 안에서 공유되는 근거가 됩니다.</figcaption>
           </figure>
-          <div>
-            <div class="eyebrow">Antithesis 2</div>
-            <h2>브라우저는 흩어진 탭이 아니라 판단의 근거가 된다</h2>
-            <p class="lead">
-              실험 대시보드, 리서치 페이지, 실행 뷰어를 사람이 따로 찾아 설명하지 않아도
-              같은 세션 안에서 보고, 비교하고, 다음 지시로 연결할 수 있습니다.
-            </p>
-          </div>
         </div>
       </section>
 
       <section class="slide" id="workspace-git-files">
-        <div class="two-col reversed">
-          <figure class="capture-slot screenshot-slot" data-slot="codex-git-files-pages">
+        <div class="screenshot-feature">
+          <div class="feature-copy">
+            <div class="eyebrow">Antithesis 3</div>
+            <h2>검증 루프가 사용자 기억 대신 세션에 남는다</h2>
+            <p class="lead">
+              commit, push, 파일 변경, Pages 확인이 같은 창 안에서 이어지면
+              사용자는 맥락을 복원하는 병목이 아니라 판단과 승인에 집중할 수 있습니다.
+            </p>
+          </div>
+          <figure class="capture-slot screenshot-slot wide-capture" data-slot="codex-git-files-pages">
             <div class="slot-head">
               <span>Codex Desktop</span>
               <code>git-files-pages</code>
@@ -1200,14 +1236,6 @@
             </div>
             <figcaption class="slot-caption">Git, 파일 변경, 배포 화면, 터미널 결과가 같은 세션의 검증 루프로 이어집니다.</figcaption>
           </figure>
-          <div>
-            <div class="eyebrow">Antithesis 3</div>
-            <h2>검증 루프가 사용자 기억 대신 세션에 남는다</h2>
-            <p class="lead">
-              commit, push, 파일 변경, Pages 확인이 같은 창 안에서 이어지면
-              사용자는 맥락을 복원하는 병목이 아니라 판단과 승인에 집중할 수 있습니다.
-            </p>
-          </div>
         </div>
       </section>
 
