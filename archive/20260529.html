@@ -1107,34 +1107,25 @@
         <div class="two-col">
           <div>
             <div class="eyebrow">Pain Point</div>
-            <h2>창은 많아졌는데 상태는 내 머리 안에 있다</h2>
+            <h2>할 수 있는 게 많아진 만큼 창은 많아졌고 병목은 사용자에게 있다</h2>
             <p class="lead">
-              여러 프로젝트를 동시에 처리하면 VS Code 창, 터미널, 원격 세션이 흩어지고
-              마지막 작업 상태를 사람이 다시 찾아야 합니다.
+              원격 서버, 문서, IDE, 터미널, agent chat까지 모두 열 수 있게 됐지만
+              무엇이 어디서 진행 중인지 다시 찾고 연결하는 일은 여전히 사람이 합니다.
             </p>
           </div>
-          <figure class="capture-slot" data-slot="vscode-window-chaos">
+          <figure class="capture-slot screenshot-slot" data-slot="vscode-window-chaos">
             <div class="slot-head">
-              <span>Capture slot</span>
+              <span>VS Code</span>
               <code>vscode-window-chaos</code>
             </div>
-            <div class="slot-body">
-              <div class="window-stack" aria-label="여러 IDE 창이 겹친 placeholder">
-                <div class="fake-window">
-                  <div class="fake-title"><span class="dot"></span><span class="dot"></span><span class="dot"></span> frontend</div>
-                  <div class="fake-lines"><i></i><i></i><i></i><i></i><i></i></div>
-                </div>
-                <div class="fake-window">
-                  <div class="fake-title"><span class="dot"></span><span class="dot"></span><span class="dot"></span> ros-ws</div>
-                  <div class="fake-lines"><i></i><i></i><i></i><i></i><i></i></div>
-                </div>
-                <div class="fake-window">
-                  <div class="fake-title"><span class="dot"></span><span class="dot"></span><span class="dot"></span> paper figures</div>
-                  <div class="fake-lines"><i></i><i></i><i></i><i></i><i></i></div>
-                </div>
-              </div>
+            <div class="slot-body image-body">
+              <img
+                class="slot-image"
+                src="assets/20260529/vscode-window-chaos.png"
+                alt="여러 VS Code 창, 원격 세션, 터미널, agent 패널이 겹쳐 열린 화면"
+              >
             </div>
-            <figcaption class="slot-caption">여러 VS Code 창과 터미널이 떠 있는 실제 캡처로 교체합니다.</figcaption>
+            <figcaption class="slot-caption">기능은 늘었지만 작업 맥락을 다시 조립하는 비용은 사용자에게 남습니다.</figcaption>
           </figure>
         </div>
       </section>
@@ -1153,14 +1144,14 @@
                 alt="Codex Desktop에서 agent 세션, 브라우저, 터미널을 한 창에서 보는 화면"
               >
             </div>
-            <figcaption class="slot-caption">agent 세션, 실행 브라우저, 터미널이 하나의 작업 화면에 붙어 있습니다.</figcaption>
+            <figcaption class="slot-caption">세션이 기준점이 되면 agent 대화, 실행 브라우저, 터미널이 같은 작업 단위로 묶입니다.</figcaption>
           </figure>
           <div>
-            <div class="eyebrow">Codex Desktop</div>
-            <h2>하나의 창 안에서 세션과 실행 화면을 같이 본다</h2>
+            <div class="eyebrow">Antithesis 1</div>
+            <h2>창이 아니라 세션이 작업의 기준점이 된다</h2>
             <p class="lead">
-              agent와의 대화, 실행 중인 브라우저, 터미널 로그가 같은 맥락 안에 남습니다.
-              이제 작업 상태를 찾기 위해 여러 IDE 창을 오갈 필요가 줄어듭니다.
+              사용자가 여러 창의 상태를 기억하는 대신, agent 세션이 지시와 실행 화면,
+              터미널 로그를 한 작업 흐름으로 붙잡습니다.
             </p>
           </div>
         </div>
@@ -1180,14 +1171,14 @@
                 alt="Codex Desktop에서 agent 세션과 웹 기반 실험 대시보드를 함께 관리하는 화면"
               >
             </div>
-            <figcaption class="slot-caption">작업 세션 옆에서 WandB 같은 브라우저 기반 실험 화면을 바로 확인합니다.</figcaption>
+            <figcaption class="slot-caption">브라우저 화면은 따로 열린 참고 자료가 아니라 세션 안에서 공유되는 근거가 됩니다.</figcaption>
           </figure>
           <div>
-            <div class="eyebrow">Workspace Surface</div>
-            <h2>브라우저도 작업 맥락의 일부가 된다</h2>
+            <div class="eyebrow">Antithesis 2</div>
+            <h2>브라우저는 흩어진 탭이 아니라 판단의 근거가 된다</h2>
             <p class="lead">
-              실험 대시보드, 리서치 페이지, 실행 뷰어는 별도 참고 자료가 아닙니다.
-              agent가 보고 있는 세션 옆에서 같이 열리고, 다음 지시의 근거가 됩니다.
+              실험 대시보드, 리서치 페이지, 실행 뷰어를 사람이 따로 찾아 설명하지 않아도
+              같은 세션 안에서 보고, 비교하고, 다음 지시로 연결할 수 있습니다.
             </p>
           </div>
         </div>
@@ -1207,14 +1198,14 @@
                 alt="Codex Desktop에서 Git 작업 세션, GitHub Pages 미리보기, 터미널을 함께 보는 화면"
               >
             </div>
-            <figcaption class="slot-caption">Git 변경, 파일 작업, 배포된 브라우저 화면, 터미널 상태가 한 흐름으로 이어집니다.</figcaption>
+            <figcaption class="slot-caption">Git, 파일 변경, 배포 화면, 터미널 결과가 같은 세션의 검증 루프로 이어집니다.</figcaption>
           </figure>
           <div>
-            <div class="eyebrow">Integrated Ops</div>
-            <h2>Git, 파일, 배포 확인까지 한 흐름으로 관리한다</h2>
+            <div class="eyebrow">Antithesis 3</div>
+            <h2>검증 루프가 사용자 기억 대신 세션에 남는다</h2>
             <p class="lead">
-              commit, push, 브라우저 확인, 파일 변경 이력이 같은 창 안에서 이어집니다.
-              작업의 중심은 파일 하나가 아니라 세션 전체의 상태와 검증 기록입니다.
+              commit, push, 파일 변경, Pages 확인이 같은 창 안에서 이어지면
+              사용자는 맥락을 복원하는 병목이 아니라 판단과 승인에 집중할 수 있습니다.
             </p>
           </div>
         </div>
