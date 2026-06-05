@@ -326,6 +326,15 @@
         height: min(52vh, 590px);
       }
 
+      .token-wide-capture {
+        width: min(100%, 1080px);
+      }
+
+      .token-wide-capture .slot-image {
+        height: min(46vh, 520px);
+        background: #2c001e;
+      }
+
       .phone-capture .slot-image {
         height: min(66vh, 720px);
         background: #f8fafd;
@@ -1434,8 +1443,8 @@
       </section>
 
       <section class="slide" id="security">
-        <div class="two-col">
-          <div>
+        <div class="screenshot-feature">
+          <div class="feature-copy">
             <div class="eyebrow">Security</div>
             <h2>토큰은 중요한 자산이고, 누군가 다 써버릴 수도 있다</h2>
             <p class="lead">
@@ -1443,7 +1452,7 @@
               공용 PC나 임시 장비에 로그인 상태를 남기면 누군가 내 한도와 권한을 그대로 소모할 수 있습니다.
             </p>
           </div>
-          <figure class="capture-slot screenshot-slot" data-slot="codex-token-status">
+          <figure class="capture-slot screenshot-slot wide-capture token-wide-capture" data-slot="codex-token-status">
             <div class="slot-head">
               <span>Token status</span>
               <code>codex-token-status</code>
