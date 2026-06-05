@@ -1462,23 +1462,23 @@
 
       <section class="slide compact" id="remote-token-safe">
         <div class="eyebrow">Practical setup</div>
-        <h2>원격 서버에 토큰을 남기지 않고 agent를 쓰는 방법</h2>
+        <h2>토큰을 남기면 안 되는 곳에서는 로컬 agent로 작업한다</h2>
         <p class="lead">
-          서버에 직접 로그인 토큰을 저장하는 대신, 개인 장비의 agent 환경에서 원격 파일과 터미널에 접속합니다.
-          현재로서는 Claude Code Desktop이나 Cursor가 현실적인 대안이 될 수 있습니다.
+          요즘 저는 원격 서버나 공용 장비처럼 토큰을 남기면 안 되는 환경에서는
+          Claude Code Desktop이나 Cursor를 개인 장비에서 띄우고, 해당 환경의 파일과 터미널에만 접속해서 작업합니다.
         </p>
         <div class="cards">
           <div class="card">
-            <b>1. 토큰은 로컬에 둔다</b>
-            <p>인증은 개인 노트북이나 신뢰할 수 있는 장비에만 남기고, 원격 서버에는 작업 대상 파일과 실행 환경만 둡니다.</p>
+            <b>1. 토큰은 개인 장비에만</b>
+            <p>로그인과 결제 한도는 신뢰할 수 있는 로컬 장비에만 두고, 원격 서버에는 agent 인증을 남기지 않습니다.</p>
           </div>
           <div class="card">
-            <b>2. 원격에는 접속만 한다</b>
-            <p>SSH, remote workspace, 터미널 연결을 통해 서버를 조작하되 agent 계정 자체를 서버에 남기지 않습니다.</p>
+            <b>2. 원격은 실행 환경으로만</b>
+            <p>서버에는 코드, 데이터, 실행 프로세스만 두고 파일 편집과 터미널 제어는 로컬 agent 표면에서 처리합니다.</p>
           </div>
           <div class="card">
-            <b>3. 필요하면 도구를 바꾼다</b>
-            <p>Codex Desktop이 맞지 않는 환경에서는 Claude Code Desktop이나 Cursor로 같은 원칙을 적용합니다.</p>
+            <b>3. 현재의 현실적인 대안</b>
+            <p>이런 조건에서는 Claude Code Desktop이나 Cursor로 remote workspace에 붙는 방식이 꽤 실용적입니다.</p>
           </div>
         </div>
       </section>
